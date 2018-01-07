@@ -1,2 +1,3 @@
 # dbox
-A script to create &amp; configure an env for doing ops and dev stuff
+Some tools to set up a linux environment for doing ops and dev stuff....
+
