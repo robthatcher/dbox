@@ -1,0 +1,23 @@
+Vagrant.configure("2") do |config|
+ config.vm.provider "virtualbox" do |vb|
+   vb.name = "dbox-nogui" # Set vm name in virtualbox
+   vb.customize ["modifyvm", :id, "--memory", "2048"] # Set vm memory in MB
+ end
+
+  config.vm.box = "bento/ubuntu-17.04" # Specify base image to use
+  config.vm.hostname = "devbox-nogui" # Set vm hostname
+
+  # Provisioning mechanisms
+  #  Use file provisioner to copy local file to vm
+  config.vm.provision "file", source: "../common/screenrc", destination: "/tmp/screenrc"
+
+  #  Use an 'inline' shell command string
+  config.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11"
+
+  #  Call a script on the vm host which executes on the vm
+  config.vm.provision :shell, path: "../provisioners/devbox_env_provisioner_nogui.sh"
+
+  # Example folder syncing
+  # config.vm.synced_folder "../../git", "/home/vagrant/git"
+
+end
